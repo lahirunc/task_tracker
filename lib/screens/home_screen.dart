@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_tracker/screens/create_task_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,7 +12,12 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Container(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreateTaskScreen()),
+          );
+        },
         child: const Icon(Icons.add),
       ),
     );

@@ -10,8 +10,13 @@ class CreateTaskScreen extends StatefulWidget {
 class _CreateTaskScreenState extends State<CreateTaskScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Create Task'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Create Task"),
+      ),
+      body: const Center(
+        child: Text('Create Task Body'),
+      ),
     );
   }
 }
