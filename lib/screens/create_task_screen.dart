@@ -47,15 +47,12 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               ),
               ElevatedButton(
                 child: const Text('Create'),
-                onPressed: () async {
+                onPressed: () {
                   // if the form is valid then it will return true,
                   // else false.
                   if (formKey.currentState!.validate()) {
                     // create query for the task
-                    await FirebaseFirestore.instance
-                        .collection('tasks')
-                        .doc()
-                        .set({
+                    FirebaseFirestore.instance.collection('tasks').doc().set({
                       'task': textEditingController.text,
                       'status': false,
                     });
