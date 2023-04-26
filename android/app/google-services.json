@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "367018379109",
+    "project_id": "hello-world-82363",
+    "storage_bucket": "hello-world-82363.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367018379109:android:e2f781dab10a42f4c3038c",
+        "android_client_info": {
+          "package_name": "com.example.task_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367018379109-959o2ig694p7koq1uo3vdmu0gjtd8lus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC0zInXd3JDPWJX8xB0YPH4NNX9xPB1lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367018379109-959o2ig694p7koq1uo3vdmu0gjtd8lus.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "367018379109-5kau0pa90imk7irek542df31fs1241l3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.taskTracker"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
