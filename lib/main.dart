@@ -5,7 +5,10 @@ import 'package:task_tracker/screens/home_screen.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
+  // this is needed for firebase to be initialized
   WidgetsFlutterBinding.ensureInitialized();
+
+  // init firebase 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
