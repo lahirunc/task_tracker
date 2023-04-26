@@ -8,10 +8,11 @@ Future<void> main() async {
   // this is needed for firebase to be initialized
   WidgetsFlutterBinding.ensureInitialized();
 
-  // init firebase 
+  // init firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
