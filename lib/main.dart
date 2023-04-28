@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:task_tracker/screens/home_screen.dart';
+import 'package:task_tracker/utils/local_storage.dart';
 
 import 'firebase_options.dart';
 
@@ -12,6 +13,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // init shared preferences
+  await LocalStorage.init();
 
   runApp(const MyApp());
 }
