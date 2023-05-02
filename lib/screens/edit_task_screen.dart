@@ -1,14 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:task_tracker/models/task_model.dart';
 
-class CreateTaskScreen extends StatefulWidget {
-  const CreateTaskScreen({super.key});
+class EditTaskScreen extends StatefulWidget {
+  // accepting task data
+  final TaskModel taskData;
+
+  const EditTaskScreen({super.key, required this.taskData});
 
   @override
-  State<CreateTaskScreen> createState() => _CreateTaskScreenState();
+  State<EditTaskScreen> createState() => _EditTaskScreenState();
 }
 
-class _CreateTaskScreenState extends State<CreateTaskScreen> {
+class _EditTaskScreenState extends State<EditTaskScreen> {
   // GlobalKey helps to identify the Form widget. This helps
   // to validate the form.
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -18,10 +22,16 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   final TextEditingController textEditingController = TextEditingController();
 
   @override
+  void initState() {
+    textEditingController.text = widget.taskData.task!;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create Task"),
+        title: const Text("Edit Task"),
       ),
       body: Form(
         // add the formKey here
@@ -46,18 +56,17 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 },
               ),
               ElevatedButton(
-                child: const Text('Create'),
+                child: const Text('Update'),
                 onPressed: () async {
                   // if the form is valid then it will return true,
                   // else false.
                   if (formKey.currentState!.validate()) {
-                    // create query for the task
+                    // update query for the task
                     await FirebaseFirestore.instance
                         .collection('tasks')
-                        .doc()
-                        .set({
+                        .doc(widget.taskData.id)
+                        .update({
                       'task': textEditingController.text,
-                      'status': false,
                     }).then((value) => Navigator.pop(context));
                   }
                 },

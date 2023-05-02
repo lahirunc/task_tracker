@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:task_tracker/models/task_model.dart';
 import 'package:task_tracker/screens/create_task_screen.dart';
+import 'package:task_tracker/screens/edit_task_screen.dart';
 import 'package:task_tracker/utils/local_storage.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,11 +15,27 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  // list that accept TaskModel
+  List<TaskModel> taskList = [];
+
   @override
   void initState() {
     firestore.collection("tasks").snapshots().listen((QuerySnapshot event) {
+      // clearing data in the list
+      taskList.clear();
+
       for (var task in event.docs) {
-        print(task.data());
+        // converting the object into map
+        Map<String, dynamic> taskMap = task.data() as Map<String, dynamic>;
+
+        // adding task id
+        taskMap['id'] = task.id;
+
+        // set state to refresh the UI when the data is added
+        setState(() {
+          // adding TaskModel into task list
+          taskList.add(TaskModel.fromJson(taskMap));
+        });
       }
     });
 
@@ -101,12 +119,52 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           // task title
-          Card(
-            child: ListTile(
-              title: const Text('Task Hello World'),
-              trailing: Checkbox(
-                value: true,
-                onChanged: (value) {},
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: taskList.length,
+            itemBuilder: (context, index) => Card(
+              child: ListTile(
+                title: Text(taskList[index].task!),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Checkbox(
+                      value: taskList[index].status,
+                      onChanged: (value) async {
+                        await firestore
+                            .collection('tasks')
+                            .doc(taskList[index].id)
+                            .update({'status': value});
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  EditTaskScreen(taskData: taskList[index]),
+                            ));
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      onPressed: () async {
+                        await firestore
+                            .collection('tasks')
+                            .doc(taskList[index].id)
+                            .delete();
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
